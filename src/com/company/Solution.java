@@ -1,30 +1,44 @@
 package com.company;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Solution {
 
-    //最长子串
-//    public int lengthOfLongestSubstring(String s) {
-//        if (s == "")
-//            return 0;
-//        else {
-//            int max = 1;
-//            for (int i = 0; i < s.length(); i++) {
-//                int len = 0;
-//                for (int y = i + 1; y < s.length(); y++) {
-//                    String ss = s.substring(i, y);
-//
-//                    if (ss.contains(s.charAt(y)) {
-//                        len = ss.length();
-//                    }
-//                }
-//                if(len>max)
-//                    max=len;
-//            }
-//            return max;
-//        }
-//
-//    }
+    //寻找两个正序数组的中位数
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
+        return 2;
+    }
+
+    //最长子串  abcabcbb  返回3
+    public static int lengthOfLongestSubstring(String s) {
+        Set<Character> occ = new HashSet<Character>();
+        int n = s.length();
+        if (s.equals(""))
+            return 0;
+        else {
+            int max = 0;
+            int y = -1;
+            for (int i = 0; i < n; i++) {
+                if (i != 0) {
+                    occ.remove(s.charAt(i-1));
+                }
+
+                for (; y + 1 < n; y++) {
+                    if (!occ.contains(s.charAt(y + 1))) {
+                        occ.add(s.charAt(y + 1));
+                    } else {
+                        break;
+                    }
+                }
+                max = Math.max(max, y - i + 1);
+            }
+            return max;
+        }
+
+    }
 
     //两数相加
     //    输入：l1 = [2,4,3], l2 = [5,6,4]
@@ -36,7 +50,7 @@ public class Solution {
         ListNode two = l2;
         ListNode three = null;
         ListNode five = null;
-        while (1 == 1) {
+        while (true) {
             if (one == null && two == null && add == 0) {
                 break;
             }
