@@ -5,8 +5,8 @@ import java.util.Stack;
 public class Main {
 
     public static void main(String[] args) {
-        Solution solution=new Solution();
-        String s=  solution.longestPalindrome("cccc");
+        Solution solution = new Solution();
+        String s = solution.convert("A", 2);
         System.out.print(s);
 
     }

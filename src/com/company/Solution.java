@@ -7,17 +7,63 @@ import java.util.Set;
 import java.util.Stack;
 
 public class Solution {
+    //    Z 字形变换
+    //    输入：s = "PAYPALISHIRING", numRows = 4
+    //    输出："PINALSIGYAHRPI"
+    //    解释：
+    //    P     I    N
+    //    A   L S  I G
+    //    Y A   H R
+    //    P     I
+    public String convert(String s, int numRows) {
+        StringBuilder str = new StringBuilder();
+        int totalLen = s.length();
+        if (s == null || totalLen == 0)
+            return "";
+        if (numRows == 1) {
+            return s;
+        }
+        int baseInt = 2 * numRows - 2;
+        for (int i = 0; i < numRows; i++) {
+            if (i < totalLen) {
+                str.append(s.charAt(i));
+            }
+            int j = 1;
+            boolean leftBol = true, rightBol = true;
+            while (leftBol || rightBol) {
+                int left = i + j * baseInt - 2 * i;
+                int right = i + j * baseInt;
+                //判断左边 left
+                if (leftBol && i != 0 && i != numRows - 1 && left < totalLen) {
+                    str.append(s.charAt(left));
+                } else
+                    leftBol = false;
 
-    //给你一个字符串 s，找到 s 中最长的回文子串。 动态规划
+                //判断右边 right
+                if (rightBol && right < totalLen) {
+                    str.append(s.charAt(right));
+                } else
+                    rightBol = false;
+                j++;
+            }
+        }
+        return str.toString();
+    }
+
+
+    //给你一个字符串 s，找到 s 中最长的回文子串。 动态规划   ，解题思路，定位中间，往两边拓展，算臂长，最后来截取字符串。
     public String longestPalindrome(String s) {
         if (s == null || s.length() == 0)
             return "";
         int max = 1;
         int strLen = 0;
+        //先考虑第一位的情况
         if (s.length() > 1 && s.charAt(0) == s.charAt(1)) {
             max++;
         }
+        //循环字符串依次作为 中心，往两边拓展
         for (int i = 1; i < s.length(); i++) {
+            //关键算法，算最长的串
             int a = getLongestPalindrome(s, i);
             if (max < a) {
                 max = a;
@@ -37,24 +83,26 @@ public class Solution {
         int count1 = 1;
         int count2 = 1;
         int y = 1;
+        // 中心为单个的 回文串
         while (i - y >= 0 && i + y < s.length()) {
             if (s.charAt(i - y) == s.charAt(i + y)) {
                 count1 += 2;
-            } else if (s.charAt(i) == s.charAt(i + y)) {
-                count1++;
             } else
                 break;
             y++;
         }
         y = 1;
-        while (i - y >= 0 && i + y < s.length()) {
-            if (s.charAt(i) == s.charAt(i + y)) {
+        boolean flag = true;
+        //中心为偶数的回文串。
+        while (i - y + 1 >= 0 && i + y < s.length()) {
+            if (s.charAt(i) == s.charAt(i + y) && flag) {
                 count2++;
-            } else if (s.charAt(i - y) == s.charAt(i + y + 1)) {
+                flag = false;
+            } else if (s.charAt(i - y + 1) == s.charAt(i + y)) {
                 count2 += 2;
-                y++;
             } else
                 break;
+            y++;
 
         }
         return Math.max(count1, count2);
