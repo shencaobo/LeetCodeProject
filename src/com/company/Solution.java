@@ -113,7 +113,7 @@ public class Solution {
 
     //最长子串  "abcabcbb" 返回3
     public int lengthOfLongestSubstring(String s) {
-        Set<Character> occ = new HashSet<Character>();
+        Set<Character> occ = new HashSet<>();
         int n = s.length();
         if (s.equals(""))
             return 0;

@@ -1,14 +1,35 @@
 package com.company;
 
+import java.util.Stack;
+
 public class Main {
 
     public static void main(String[] args) {
+        Solution solution=new Solution();
+        String s=  solution.longestPalindrome("cccc");
+        System.out.print(s);
 
-        Solution solution =new Solution();
-        String i = solution.longestPalindrome("cccc");
-//        int[] test = {2, 7, 11, 15};
-//        int[] a= Solution.twoSum(test, 9);
-        System.out.print(i);
+    }
+
+    public static boolean isValid(String s) {
+        if (s == null || s.length() == 0) {
+            return true;
+        }
+
+        Stack<Character> t = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            Character c = s.charAt(i);
+            if (c == '(')
+                t.push(c);
+            else if (c == ')')
+                if (t.empty())
+                    return false;
+                else
+                    t.pop();
+
+        }
+
+        return t.empty();
     }
 
 }
